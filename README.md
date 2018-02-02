@@ -16,3 +16,5 @@ git push -u origin master
 - 上传：git push -u origin v2
 
 
+http://apps.bdimg.com/libs/jquery/2.1.1/jquery.min.js
+
