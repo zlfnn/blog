@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		*{margin:0; padding: 0;}
+		#box {
+			margin: 100px auto 0;
+			width: 500px;
+			height: 250px;
+			overflow:hidden;
+			position:relative;
+		}
+		#ul1 {
+			height: 250px;
+			position: absolute;
+			left: 0;
+			top: 0;
+		}
+		li {
+			width: 500px;
+			float: left;
+			list-style:none;
+		}
+		img {
+			width: 100%;
+			display: block;
+		}
+		p {
+			position:absolute;
+			left: 50%;
+			bottom: 10px;
+			transform: translateX(-50%);
+		}
+		p span {
+			width: 20px;
+			height: 20px;
+			border-radius: 50%;
+			background-color: #eee;
+			float: left;
+			margin: 0 5px;
+		}
+		p span.active{
+			background-color: red;
+		}
+	</style>
+</head>
+<body>
+	<div id="box">
+		<ul id="ul1">
+			<li><img src="img/10.jpg" alt=""></li>
+			<li><img src="img/11.jpg" alt=""></li>
+			<li><img src="img/12.jpg" alt=""></li>
+			<li><img src="img/13.jpg" alt=""></li>
+			<li><img src="img/14.jpg" alt=""></li>
+		</ul>
+		<p>
+			<span class="active"></span>
+			<span></span>
+			<span></span>
+			<span></span>
+			<span></span>
+		</p>
+	</div>
+	<script src="js/animate.js"></script>
+	<script>
+		window.onload = function() {
+			var oUl = document.getElementById('ul1');
+			var aLi = oUl.getElementsByTagName('li');
+			var aSpan = document.getElementsByTagName('span');
+			var iLen = aLi.length;
+			var iWidth = aLi[0].offsetWidth;
+
+			oUl.style.width = iLen*iWidth + 'px';
+
+			for(var i=0;i<aSpan.length;i++) {
+				aSpan[i].index = i;
+				aSpan[i].onclick=function() {
+					for(var j=0;j<aSpan.length;j++) {
+						aSpan[j].className = '';
+					}
+					this.className = 'active';
+					vMove(oUl,{
+						left: -this.index*iWidth
+					})
+				}
+			}
+		}
+	</script>
+</body>
+</html>

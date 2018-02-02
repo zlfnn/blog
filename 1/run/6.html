@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <title>多值同时运动--链式运动</title>
+    <style>
+    #div1 {
+        width: 100px;
+        height: 100px;
+        background-color: red;
+        position: absolute;
+        left: 0;
+        top: 100px;
+    }
+    </style>
+    <script>
+    	//摩擦运动
+    // window.onload = function() {
+    //     var oBtn = document.getElementById('btn');
+    //     var oDiv = document.getElementById('div1');
+    //     var iTimer = null;
+    //     var iSpeed = 50;
+
+    //     oBtn.onclick = function() {
+    //         console.log(1);
+    //         clearInterval(iTimer);
+    //         iTimer = setInterval(function() {
+    //             iSpeed *= 0.92;
+    //             // console.log(iSpeed);
+    //             if (oDiv.offsetLeft == 500) {
+
+    //                 clearInterval(iTimer);
+    //                 console.log(oDiv.offsetLeft);
+    //                 // oDiv.style.left = '500px';
+    //             } else {
+    //                 oDiv.style.left = oDiv.offsetLeft + iSpeed + 'px';
+    //             }
+
+    //         }, 30);
+
+
+    //     }
+
+
+    // }
+    // 缓冲运动
+    window.onload = function() {
+        var oBtn = document.getElementById('btn');
+        var oDiv = document.getElementById('div1');
+        var iTimer = null;
+
+        oBtn.onclick = function() {
+            clearInterval(iTimer);
+            var iSpeed = 0;
+            iTimer = setInterval(function() {
+                iSpeed = (500 - oDiv.offsetLeft)/8;
+              	iSpeed = iSpeed > 0 ? Math.ceil(iSpeed):Math.floor(iSpeed);
+                if (oDiv.offsetLeft == 500) {
+
+                    clearInterval(iTimer);
+                    console.log(oDiv.offsetLeft);
+                    // oDiv.style.left = '500px';
+                } else {
+                    oDiv.style.left = oDiv.offsetLeft + iSpeed + 'px';
+                }
+
+            }, 30);
+
+
+        }
+
+
+    }
+    </script>
+</head>
+
+<body>
+    <input type="button" value="动起来" id='btn'>
+    <div id="div1"></div>
+</body>
+
+</html>

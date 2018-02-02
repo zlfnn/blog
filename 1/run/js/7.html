@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		#div1 {
+			width: 100px;
+			height: 100px;
+			background-color: red;
+			position: absolute;
+			left: 0;
+			top: 30px;
+		}
+	</style>
+</head>
+<body>
+	<div id="div1"></div>
+
+	<script src="animate.js"></script>
+	<script>
+		window.onload = function() {
+			var oDiv = document.getElementById('div1');
+
+			oDiv.onclick = function() {
+				vMove(this,{
+					left: 100
+				},function() {
+					vMove(this,{top: 100},function(){
+						cMove(this,{opacity: 0.5}, -10)
+					});
+				})
+			}
+		}
+	</script>
+</body>
+</html>

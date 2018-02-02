@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		#div1 {
+			width: 100px;
+			height: 100px;
+			background: red;
+			position: absolute;
+			left: 0;
+			top: 40px;
+		}
+	</style>
+	<script>
+		window.onload=function() {
+			var oBtn = document.getElementById('btn');
+			var oDiv = document.getElementById('div1');
+			var iTimer = null;
+			// 需求
+			//点击按钮，让div横向右移动
+			//定时器
+			//实现
+			// 清除定时器，保证运动过程中只有一个定时器在执行
+			// 开启定时器
+			// 开始运动（同时判断，什么时候停止运动）
+			clearInterval(iTimer);
+			oBtn.onclick = function() {
+				iTimer = setInterval(function(){
+					if(oDiv.offsetLeft != 500) {
+						oDiv.style.left = oDiv.offsetLeft +10+'px';
+					} else {
+	 					clearInterval(iTimer);
+					}
+				},30)
+			}
+			
+			
+		}
+	</script>
+</head>
+<body>
+	<input type="button" value="动起来" id="btn">
+	<div id="div1"></div>
+</body>
+</html>

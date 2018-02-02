@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		#div1 {
+			width: 100px;
+			height: 200px;
+			background-color: pink;
+			position: absolute;
+			left: -100px;
+			top: 100px;
+		}
+		#div2 {
+			width: 30px;
+			height: 60px;
+			background-color: green;
+			position: absolute;
+			right: -30px;
+			top: 70px;
+			color:#fff;
+			text-align: center;
+		}
+		#img1 {
+			display: block;
+			width: 300px;
+			margin: 50px auto;
+			opacity:0.3;
+			filter: alpha(opacity=30);
+		}
+	</style>
+	<script>
+		window.onload = function() {
+			var oDiv1 = document.getElementById('div1');
+			var oDiv2 = document.getElementById('div2');
+			var oImg = document.getElementById('img1');
+			oDiv1.onmouseover = function(){
+			
+				startMove(this,0, 10);
+			}
+			oDiv1.onmouseout = function() {
+					
+				startMove(this,-100, -10)
+			}
+			function startMove(obj,iTarget, iSpeed) {
+				
+				clearInterval(obj.iTimer);
+				obj.iTimer = setInterval(function(){
+					if(obj.offsetLeft == iTarget) {
+						clearInterval(obj.iTimer);
+					} else {
+						obj.style.left = obj.offsetLeft + iSpeed + 'px';
+					}
+				},30)
+			}
+			oImg.onmouseover = function() {
+				startMove2(this, 100,10);
+			}
+			oImg.onmouseout = function() {
+				startMove2(this, 30,-10);
+			}
+			function startMove2(obj,iTarget, iSpeed) {
+				clearInterval(obj.iTimer);
+				var iCur = 0;
+				obj.iTimer = setInterval(function(){
+					iCur = Math.round(css(obj,'opacity')*100);
+					console.log(iCur);
+					if(iCur == iTarget) {
+						clearInterval(obj.iTimer)
+					}else{
+						obj.style.opacity = (iCur + iSpeed)/100;
+						obj.style.filter = 'alpha(opacity='+(iCur+iSpeed)+')';
+					}
+				},30)
+			}
+
+			function css(obj,attr) {
+				if(obj.currentStyle){
+					return obj.currentStyle[attr];
+				}else{
+					return getComputedStyle(obj,false)[attr];
+				}
+			}
+			
+		}
+	</script>
+</head>
+<body>
+	<div id="div1">
+		<div id="div2">分享到</div>
+	</div>
+
+	<img src="../images/0.jpg" alt="" id="img1">
+</body>
+</html>
