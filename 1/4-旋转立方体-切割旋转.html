@@ -1,0 +1,90 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+
+<title>旋转立方体</title>
+
+<style>
+
+.center{ position:absolute; left:0; top:0; right:0; bottom:0; margin:auto; }
+.slide{ width:980px; height:500px; transform-style:preserve-3d; perspective:3000px; }
+.pic{ height:100%; position:absolute; top:0; }
+
+</style>
+
+<script src="js/jquery-3.1.0.min.js"></script>
+<script>
+
+$(function(){
+	
+     var slide=$(".slide");
+	 
+	 var num=10;
+	 var w=slide.width()/num;
+	 
+	 
+	 // 1 初始化立方体的四个面
+	 for(var i=0;i<4;i++){
+	     $("<div class='item'></div>")
+		 .appendTo(slide);	 
+	 }
+	 
+	 // 2 每个面插入若干个子块
+	 $(".item").each(function(index, element) {
+		 
+		 var deg=index*90;
+		 
+		 for(var i=0;i<num;i++){
+			 
+			 var t=i*0.1;
+			 
+		     $("<div class='pic'></div>")
+			 .width(w)
+			 .css({
+				   "left":i*w+"px",
+				   "background-image":"url(images/"+index+".jpg)",
+				   "background-position":i*(-w)+"px 0px",
+				   "transform":"rotateX("+deg+"deg) translateZ(250px)",
+				   "transition":"transform .5s "+t+"s" 
+			  })
+		     .appendTo(this)	 
+		 }
+
+     });
+	 
+	 
+	 // 3 点击事件
+	 var num=0;
+	 
+	 $(window).click(function(){
+		 num++;
+		 $(".item").each(function(index, element) {
+			 var deg=index*90-num*90;
+			 
+			 $(this).find(".pic").each(function(index, element) {
+                  $(this).css({
+					    "transform":"rotateX("+deg+"deg) translateZ(250px)"   
+				  })
+             });
+            
+         });
+		 
+		 // 0 90 180 270 
+		 
+		 
+	 });
+	 
+})
+
+</script>
+</head>
+
+<body>
+
+<div class="slide center">
+   
+</div>
+
+</body>
+</html>

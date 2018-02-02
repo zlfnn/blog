@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <style>
+			*{
+				margin:0;
+				padding:0;
+			}
+	
+        </style>
+    </head>
+    <body>
+		  <canvas id='cvs' width='400' height='400'></canvas>
+    <script>
+    	window.onload=function(){
+    		var cvs=document.getElementById('cvs');
+    		var ctx=cvs.getContext('2d');
+    		cvs.width=window.innerWidth;
+    		cvs.height=window.innerHeight;
+    		var lastX;
+    		var lastY;
+    		var state=0;
+            var path;
+                var len=0;
+    		window.oncontextmenu=function(){
+    			return false;
+    		}
+    		window.onmousedown=function(e){
+
+    			if(e.button==0){
+    				state=1;  
+    			}else if(e.button==2){
+    				state=2;
+    			}
+    						
+    		}
+    		window.onmouseup=function(e){
+    			state=0;
+    			lastX=lastY=undefined;
+                console.log(path);
+                console.log(len);
+    		}
+    		window.onmousemove=function(e){
+                
+    			if(state==1){
+    				paint(e)
+    			}else if(state==2){
+    				erater(e);
+    			}
+    		}
+    		
+	  		function paint(e){
+	  			if(lastX==undefined||lastY==undefined){
+	  				lastX=e.offsetX;
+    				lastY=e.offsetY;
+                    path="M"+lastX+","+lastY;
+    				return;
+	  			}
+	  			ctx.beginPath();
+	  			ctx.moveTo(lastX,lastY);
+	  			ctx.lineTo(e.offsetX,e.offsetY);
+                len+=Math.sqrt(Math.pow((e.offsetX-lastX),2)+Math.pow((e.offsetY-lastY),2))
+                path+="L"+e.offsetX+","+e.offsetY;
+	  			ctx.stroke();
+
+	  			lastX=e.offsetX;
+    			lastY=e.offsetY;
+	  		}
+	  		function erater(e){
+	  			var w=50;
+	  			var h=50;
+	  			var x=e.offsetX-w/2;
+	  			var y=e.offsetY-h/2;
+	  			ctx.clearRect(x,y,w,h);
+	  		}
+    	}
+
+    </script>
+
+
+    </body>
+</html>

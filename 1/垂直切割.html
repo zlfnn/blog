@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="js/jquery-1.11.3.min.js"></script>
+    <style>
+        body{background: #000000;}
+        *{margin: 0;padding: 0;}
+        .box{width: 600px;height: 338px;position: absolute;transform-style: preserve-3d;perspective: 3000px;}
+        .box1 {position: absolute;left: 0;top:0;right: 0;bottom: 0;margin: auto;}
+        .item{position: absolute;width: 100%;}
+    </style>
+    <script>
+        $(function(){
+            var itemCount=5;
+            init();
+            function init(){
+                var box=$(".box");
+                var h=box.height() / itemCount;
+                for(var i=0;i<4;i++){
+                    var slide= $("<div class='slide'></div>").appendTo(box);
+                    for(var j=0;j<itemCount;j++){
+                        var degg=i*90;
+                        $("<div class='item'></div>")
+                                .height(h)
+                                .css({
+                                    "top":h*j,
+                                    "background-image": "url('images/timg"+i+".jpg')",
+                                    "background-position":"0 "+-h*j+"px",
+                                    "transform": "rotateY("+degg+"deg) translateZ(300px)",
+                                    "transition": "transform .5s "+j*0.1+"s"
+                                })
+                                .appendTo(slide);
+                    }
+                }
+            }
+            var countRotate=0;
+            function rotate(){
+                countRotate++;
+                $(".slide").each(function(indexSlide){
+                    var degg=indexSlide*90+90*countRotate;
+                    $(this).find(".item").css("transform","rotateY(" + degg + "deg)  translateZ(300px)")
+                });
+            }
+            $(".box").click(rotate);
+        });
+    </script>
+</head>
+<body>
+<div class="box box1">
+</div>
+</body>
+</html>

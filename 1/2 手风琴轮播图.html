@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <style>
+			*{
+				margin:0;
+				padding:0;
+			}
+			#wrap{
+				width:600px;
+				height:400px;
+				position: absolute;
+				right:0;
+				left:0;
+				top:0;
+				bottom:0;
+				margin:auto;
+				
+			}
+			.cont{
+				width:100%;
+				height:100%;
+				position: absolute;
+				left:0;
+				top:0;
+			}
+			.btn{
+				width:50px;
+				height:50px;
+				border-radius: 50%;
+				border:2px solid yellow;
+				position: absolute;
+				
+				font-size:12px;
+				color:green;
+				text-align: center;
+				line-height: 50px;
+				background:pink;
+			}
+			.btn1{
+				left:50px;
+				bottom:-70px;
+				background:#fff;
+			}
+			.btn2{
+				left:200px;
+				bottom:-70px;
+			}
+			.btn3{
+				right:200px;
+				bottom:-70px;
+			}
+			.btn4{
+				right:50px;
+				bottom:-70px;
+			}
+			.run{
+				animation:run 1s;
+				z-index:2;
+			}
+
+			@keyframes run{
+				0%{width:0;}
+				100%{width:150px;}
+			}
+        </style>
+    </head>
+    <body>
+    	<div id='wrap'>
+   
+    	</div>
+
+    	<script src='js/jquery-1.11.3.min.js'></script>
+    	<script>
+	    	$(function(){
+	    		var wrap=$('#wrap');
+
+	    		function init(){
+	    			
+	    			for(var i=0;i<4;i++){
+	    				var contain=$('<div class="cont"></div>')
+	    				for(var j=0;j<4;j++){
+	    					$('<div class="item"></div>').css({
+	    					'width':'150px',
+	    					'height':'400px',
+	    					'background-image':'url(images/'+i+'.jpg)',
+	    					'background-position':j*(-150)+'px 0px',
+	    					'position':'absolute',
+	    					'left':j*150+'px',
+	    					'top':'0',
+	    					}).appendTo(contain);
+	    				}
+	    				
+	    				contain.appendTo(wrap);    				
+	    			}
+	    		}
+	    		init();
+
+	    		var n=0
+	    		$('.cont').eq(0).find('.item').addClass('run');
+	    		function change(){
+	    			$('.cont').eq(n).find('.item').removeClass('run');
+	    			n++;
+	    			if(n==4){n=0;}  
+					$('.cont').eq(n).find('.item').addClass('run');  		  		    		
+	    		}
+	    		window.onclick=function(){
+	    			change();
+	    		}
+	    		
+	    	})
+    	</script>
+    </body>
+</html>
