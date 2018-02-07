@@ -3,8 +3,38 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Document</title>
+	<style>
+		#div1 {width: 100px;height: 100px;background-color: red;position: absolute;}
+	</style>
 </head>
 <body>
-	
+	<input type="button" value="开始运动" id="input">
+	<div id="div1"></div>
+	<script>
+			
+		window.onload=function(){
+			var oInput = document.getElementById('input');
+			var oDiv = document.getElementById('div1');
+
+			var timer = null;
+			// var iSpeed = 0;
+			var iSpeed = 80;
+			oInput.onclick=function() {
+				startMove();
+			}
+			//加速运动，每次改变速度
+			//
+			function startMove() {
+				clearInterval(timer);
+				timer = setInterval(function(){
+					// iSpeed += 3;
+					iSpeed -= 3;
+					oDiv.style.left = oDiv.offsetLeft + iSpeed + 'px';
+				},30)
+			}
+		}
+
+
+	</script>
 </body>
 </html>

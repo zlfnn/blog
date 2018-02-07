@@ -74,12 +74,12 @@ function cMove(obj, json, iSpeed, fn) {
         var iBtn = true;
         //什么时候停止，所有属性都运动到了目标点后
         for (var attr in json) {
-           
+
             if (attr == 'opacity') {
-            	iTarget = Math.round(json[attr] * 100);
+                iTarget = Math.round(json[attr] * 100);
                 iCur = Math.round(css(obj, 'opacity') * 100);
             } else {
-            	iTarget = json[attr];
+                iTarget = json[attr];
                 iCur = parseInt(css(obj, attr));
             }
 
@@ -101,3 +101,108 @@ function cMove(obj, json, iSpeed, fn) {
         }
     }, 30)
 }
+
+/*
+    弹性运动
+    暂时是改变高度
+ */
+function tMove(obj,iTarget) {
+    clearInterval(obj.timer);
+    obj.timer = setInterval(function() {
+        iSpeed += (iTarget - obj.offsetHeight) / 6;
+        iSpeed *= 0.75;
+        if (Math.abs(iSpeed) <= 1 && Math.abs(iTarget - obj.offsetHeight) <= 1) {
+            clearInterval(timer);
+            iSpeed = 0;
+            obj.style.height = iTarget + 'px';
+        } else {
+            var H = obj.offsetHeight + iSpeed;
+            if (H < 0) {
+                H = 0;
+            }
+            obj.style.height = H + 'px';
+        }
+    }, 30)
+}
+
+        //碰撞运动:首先找到碰撞的临界点，在确定运动的方向，然后去改变对应的速度
+        //自由落体:y周一直改变速度的方法，却在变小
+        //抛物运动: x,y周方向速度都在变化
+        window.onload=function() {
+            var oDiv = document.getElementById('div1');
+
+            var iSpeedX = 10;
+            var iSpeedY = 10;
+            startMove();
+            function startMove() {
+                setInterval(function(){
+                    var L = oDiv.offsetLeft + iSpeedX;
+                    var T = oDiv.offsetTop + iSpeedY;
+                    if(T>document.documentElement.clientHeight - oDiv.offsetHeight) {
+                        T = document.documentElement.clientHeight - oDiv.offsetHeight;
+                        iSpeedY *= -1;
+                    }else if(T<0){
+                        T = 0;
+                        iSpeedY *= -1;
+                    }
+                    if(L>document.documentElement.clientWidth - oDiv.offsetWidth) {
+                        L = document.documentElement.clientWidth - oDiv.offsetWidth;
+                        iSpeedX *= -1;
+                    }else if(L<0){
+                        L = 0;
+                        iSpeedX *= -1;
+                    }
+
+                    oDiv.style.left = L + 'px';
+                    oDiv.style.top = T + 'px';
+
+                },30)
+            }
+            var oDiv2 = document.getElementById('div2');
+            var timer2 = null;
+            var iSpeed2 = 0;
+
+            oDiv2.onclick=function() {
+                startMove2();
+            }
+
+            function startMove2(){
+                clearInterval(timer2);
+                timer2 = setInterval(function(){
+                    iSpeed2 += 3;
+                    var T = oDiv2.offsetTop + iSpeed2;
+
+                    if(T > document.documentElement.clientHeight - oDiv2.offsetHeight){
+                        T = document.documentElement.clientHeight - oDiv2.offsetHeight;
+                        iSpeed2 *= -1;
+                        iSpeed2 *= 0.75;
+                    }
+                    oDiv2.style.top = T + 'px';
+                }, 30);
+            }
+
+            var oDiv3 = document.getElementById('div3');
+            var timer3 = null;
+            var iSpeed3 = -40;
+            var iSpeedX3 = 10;
+
+            oDiv3.onclick=function(){
+                startMove3();
+            }
+            function startMove3(){
+                clearInterval(timer3);
+                timer3  = setInterval(function(){
+                    iSpeed3 += 3;
+                    var T3 = oDiv3.offsetTop + iSpeed3;
+                    if(T3 > document.documentElement.clientHeight - oDiv3.offsetHeight){
+                        T3 = document.documentElement.clientHeight - oDiv3.offsetHeight;
+                        iSpeed3 *= -1;
+                        iSpeed3 *= 0.75;
+                        iSpeedX3 *= 0.75;
+                    }
+                    oDiv3.style.top = T3 + 'px';
+                    oDiv3.style.left = oDiv3.offsetLeft + iSpeedX3 + 'px';
+
+                }, 30)
+            }
+        }

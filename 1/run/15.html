@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+        * {
+        margin: 0;
+        padding: 0;
+    }
+
+    #ul1 {
+        width: 550px;
+        height: 30px;
+        margin: 20px auto;
+        position: relative;
+    }
+
+    #ul1 li {
+        width: 100px;
+        height: 30px;
+        background: red;
+        border: 1px #000 solid;
+        margin-right: 5px;
+        float: left;
+        list-style: none;
+        line-height: 30px;
+        text-align: center;
+    }
+
+    #ul1 #mark {
+        position: absolute;
+        left: 0;
+        top: 0;
+        overflow: hidden;
+    }
+
+    #ul1 #mark ul {
+        width: 550px;
+        position: absolute;
+        left: -1px;
+        top: -1px;
+        color: white;
+    </style>
+</head>
+
+<body>
+    <ul id="ul1">
+        <li id="mark">
+            <ul>
+                <li>首页</li>
+                <li>论坛</li>
+                <li>视频</li>
+                <li>留言</li>
+                <li>关于</li>
+            </ul>
+        </li>
+        <li class="box active">首页</li>
+        <li class="box">论坛</li>
+        <li class="box">视频</li>
+        <li class="box">留言</li>
+        <li class="box">关于</li>
+    </ul>
+    <script>
+    window.onload = function() {
+
+        var aLi = document.getElementsByClassName('box');
+        var oMark = document.getElementById('mark');
+        var childUl = oMark.getElementsByTagName('ul')[0];
+
+        var timer = null;
+        var timer2 = null;
+        var iSpeed = 0;
+
+        for (var i = 0; i < aLi.length; i++) {
+            aLi[i].onmouseover = function() {
+                clearInterval(timer2);
+                startMove(this.offsetLeft);
+            }
+
+            aLi[i].onmouseout = function() {
+
+                timer2 = setTimeout(function() {
+                    startMove(0);
+                }, 100)
+            }
+        }
+        oMark.onmouseover = function() {
+            clearTimeout(timer2);
+        }
+        oMark.onmouseout = function() {
+            timer2 = setTimeout(function() {
+                startMove(0);
+            }, 100)
+        }
+
+        function startMove(iTarget) {
+            clearInterval(timer);
+            timer = setInterval(function() {
+                iSpeed += (iTarget - oMark.offsetLeft) / 6;
+                iSpeed *= 0.75;
+                if (Math.abs(iSpeed) <= 1 && Math.abs(iTarget - oMark.offsetLeft) <= 1) {
+                    clearInterval(timer);
+                    oMark.style.left = iTarget + 'px';
+                    childUl.style.left = -iTarget + 'px';//超过了就给回去
+                    iSpeed = 0;
+                } else {
+                    oMark.style.left = oMark.offsetLeft + iSpeed + 'px';
+                    childUl.style.left = -oMark.offsetLeft + 'px';
+                }
+            }, 30)
+        }
+
+    }
+    </script>
+</body>
+
+</html>

@@ -71,7 +71,8 @@
 			var aSpan = document.getElementsByTagName('span');
 			var iLen = aLi.length;
 			var iWidth = aLi[0].offsetWidth;
-
+			var iTimer = null;
+			var nowIndex = 0;
 			oUl.style.width = iLen*iWidth + 'px';
 
 			for(var i=0;i<aSpan.length;i++) {
@@ -81,11 +82,41 @@
 						aSpan[j].className = '';
 					}
 					this.className = 'active';
+					nowIndex = this.index;
+					console.log(nowIndex);
 					vMove(oUl,{
 						left: -this.index*iWidth
 					})
 				}
 			}
+
+			
+			autoRun();
+			oUl.onmouseover =  function() {
+				clearInterval(iTimer);
+			}
+			oUl.onmouseout =  function() {
+				autoRun()
+			}
+
+			function autoRun(){
+				iTimer = setInterval(function() {
+					// clearInterval(iTimer);
+					nowIndex++;
+					if(nowIndex >=  aLi.length) {
+						nowIndex = 0;
+					}
+					for(var j=0;j<aSpan.length;j++) {
+						aSpan[j].className = '';
+					}
+					aSpan[nowIndex].className = 'active';
+					vMove(oUl,{
+						left: -nowIndex*iWidth
+					})
+					
+				},2000)
+			}
+
 		}
 	</script>
 </body>
