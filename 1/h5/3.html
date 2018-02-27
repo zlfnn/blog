@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		body{
+			background-color: red;
+		}
+		#oc {background-color: #fff;}
+	</style>
+</head>
+<body>
+	<canvas id="oc" width="500" height="500"></canvas>
+	<script>
+		window.onload = function() {
+			var oC = document.getElementById('oc');
+			var ctx = oC.getContext('2d');
+
+			var x = oC.width/2;
+			var y = oC.height/2;
+			var r = 0;
+			var c1 = null;
+			var c2 = null;
+			var c3 = null;
+			var a  = 1;
+
+			
+
+			setInterval(function(){
+				c1 = Math.floor(Math.random()*255);
+				c2 = Math.floor(Math.random()*255);
+				c3 = Math.floor(Math.random()*255);
+				if(a <= 0) {
+					a = 1;
+				}
+				r += 5;
+				a -= 0.05;
+
+				ctx.clearRect(0, 0, oC.width, oC.height);
+				ctx.beginPath();
+				ctx.fillStyle = 'rgba('+c1+','+c2+','+c3+','+a+')';
+				ctx.moveTo(x,y);
+				ctx.arc(x, y, r, 0, Math.PI*360 / 180, false);
+	 			ctx.closePath();
+				ctx.fill();
+			}, 100)
+
+
+		}
+	</script>
+</body>
+</html>

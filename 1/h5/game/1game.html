@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>game1</title>
+	<style>
+		*{margin:0;padding: 0;}
+		body {background-color: red;}
+		#div1 {background-color: #fff; width:600px; margin: 50px 0;}
+	</style>
+</head>
+<body>
+	<div id="div1">
+		<canvas id="oc" width="600" height="600"></canvas>
+	</div>
+	<script>
+		window.onload = function() {
+			var oC = document.getElementById('oc');
+			var ctx = oC.getContext('2d');
+			var i = 0;
+			var ball = [];
+			ball[0] = {
+				x: 300,y:0,r:200,num:0,startX: 300, startY: 0
+			}
+			
+			setInterval(function(){
+				ctx.clearRect(0,0,oC.width,oC.height);
+
+				ctx.beginPath();
+				ctx.arc(300,200,200,-90*Math.PI/180, 180*Math.PI/180,false);
+				ctx.stroke();
+
+				ctx.beginPath();
+				ctx.arc(250,200,150,180*Math.PI/180, 360*Math.PI/180,false);
+				ctx.stroke();
+
+				ctx.beginPath();
+				ctx.arc(400,200,20,0*Math.PI/180, 360*Math.PI/180,false);
+				ctx.stroke();
+			
+				ctx.beginPath();
+				ctx.arc(i++, i++,20,0*Math.PI/180,360*Math.PI/180,false);
+				// ctx.closePath();
+				ctx.stroke();
+				
+				for(var i=0;i<ball.length;i++) {
+					
+					ctx.beginPath();
+					ctx.moveTo(ball[i].x,ball[i].y);
+					// ctx.fillStyle = '#eee';
+					ctx.arc(ball[i].x,ball[i].y,20,0*Math.PI/180,360*Math.PI/180,false);
+					ctx.fill();
+					if(ball[i].x <= 100) {
+						ball[i].r = 150;
+						ball[i].x = 100;
+						ball[i].y = 200;
+					}
+				}
+
+			}, 1000/30)
+
+			setInterval(function(){
+				for(var i=0;i<ball.length;i++){
+					ball[i].num++;
+					// 圆与正弦余弦的转换
+					ball[i].x = Math.sin(ball[i].num*Math.PI/180)*ball[i].r+ball[i].startX;
+					ball[i].y =ball[i].r - Math.cos(ball[i].num*Math.PI/180)*ball[i].r + ball[i].startY;
+				}
+			}, 30)
+		}
+	</script>
+</body>
+</html>

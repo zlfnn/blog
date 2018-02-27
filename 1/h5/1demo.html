@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <canvas id="c1" width="500" height="500"></canvas>
+    <script>
+    window.onload = function() {
+        var oC = document.getElementById('c1');
+        var ctx = oC.getContext('2d');
+        oC.width = document.documentElement.clientWidth;
+        oC.height = document.documentElement.clientHeight;
+        // var iNum = 0;
+        // ctx.strokeRect(0,0,100,100);
+
+        // setInterval(function(){
+        // 	iNum++;
+        // 	ctx.clearRect(0,0,oC.width,oC.height);
+        // 	ctx.strokeRect(iNum,iNum,100,100);
+        // },30)
+        var setArr = []; //收集所有的元素的集合
+        setInterval(function() {
+            var x = Math.floor(Math.random() * oC.width);
+            var y = Math.floor(Math.random() * oC.height);
+            var r = 10;
+            var c1 = Math.floor(Math.random() * 255);
+            var c2 = Math.floor(Math.random() * 255);
+            var c3 = Math.floor(Math.random() * 255);
+            var c4 = 1;
+
+            setArr.push({
+                x: x,
+                y: y,   //圆心
+                r: r,  //半径
+                c1: c1,  //颜色r
+                c2: c2,  //颜色g
+                c3: c3,  //颜色b
+                c4: c4  //透明度a
+            });
+        }, 500);
+
+        setInterval(function() {
+
+            ctx.clearRect(0, 0, oC.width, oC.height);
+
+            for (var i = 0; i < setArr.length; i++) {
+                setArr[i].r += 1;
+                setArr[i].c4 -= 0.01;
+                if (setArr[i].c4 <= 0) {
+                    setArr.splice(i, 1);
+                }
+            }
+
+            for (var i = 0; i < setArr.length; i++) {
+                ctx.beginPath();
+                ctx.fillStyle = 'rgba(' + setArr[i].c1 + ',' + setArr[i].c2 + ',' + setArr[i].c3 + ',' + setArr[i].c4 + ')';
+                ctx.moveTo(setArr[i].x, setArr[i].y);
+                ctx.arc(setArr[i].x, setArr[i].y, setArr[i].r, 0, 360 * Math.PI / 180, false);
+                ctx.closePath();
+                ctx.fill();
+            }
+
+        }, 1000 / 60);
+
+
+
+    }
+    </script>
+</body>
+
+</html>

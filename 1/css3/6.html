@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>折子</title>
+	<style>
+		* {
+			margin: 0;
+			padding: 0;
+		}
+		#wrap {
+			width: 500px;
+			margin: 30px auto;
+			-webkit-perspective: 800px;
+			-webkit-transform-style: preserve-3d;
+		}
+		#wrap div {
+			height: 100px;
+			border: 1px solid pink;
+			background-color: #eee;
+		}
+		#wrap div:nth-of-type(1) {
+			-webkit-transform-origin: bottom;
+			-webkit-transform: rotateX(45deg);
+		}
+		#wrap div:nth-of-type(2) {
+			-webkit-transform-origin: top;
+			-webkit-transform: rotateX(-45deg);
+		}
+		#wrap div:nth-of-type(3) {
+			-webkit-transform-origin: top;
+			-webkit-transform: rotateX(45deg);
+		}
+
+.wrap{ width:500px;margin:0 auto; -webkit-perspective:800px; -webkit-transform-style:preserve-3d; position:relative;}
+.wrap div{position:absolute;top:102px;left:0;width:500px; -webkit-transform-origin:top;-webkit-transform-style:preserve-3d;}
+.wrap span{height:100px;border:1px solid #eee;background:pink; display:block;}
+.wrap>div:nth-of-type(1){top:0;}
+
+
+
+@-webkit-keyframes open
+{
+	0%
+	{
+		-webkit-transform:rotateX(-120deg);
+	}
+	25%
+	{
+		-webkit-transform:rotateX(30deg);
+	}
+	50%
+	{
+		-webkit-transform:rotateX(-15deg);
+	}
+	75%
+	{
+		-webkit-transform:rotateX(8deg);
+	}
+	100%
+	{
+		-webkit-transform:rotateX(0deg);
+	}
+}
+body{margin:0;}
+#wrap1{ width:160px; position:relative; -webkit-perspective:800px;}
+#wrap1 h2{ height:40px;background:#F60; color:#fff; font: bold 16px/40px "微软雅黑"; text-align:center;margin:0; position:relative;z-index:10;}
+#wrap1 div{ position:absolute;top:32px; width:100%;left:0; -webkit-transform-style:preserve-3d; -webkit-transform-origin:top;-webkit-transform:rotateX(-120deg);}
+#wrap1 span{ display:block;height:30px;background:#9F0; font:12px/30px "宋体"; color:#fff; text-indent:20px;}
+#wrap1>div{top:40px;}
+#wrap1 .show{-webkit-animation:1.2s open;-webkit-transform:rotateX(0deg);}
+#btn{ position:absolute;top: 100px;}
+
+	</style>
+</head>
+<body>
+	<div id="wrap">
+		<div>1</div>
+		<div>2</div>
+		<div style="height: auto">
+			<div>3</div>
+		</div>
+	</div>
+	<div class="wrap">
+	<div style="-webkit-transform:rotateX(-45deg);">
+    	<span>1</span>
+        <div style="-webkit-transform:rotateX(90deg);">
+        	<span>2</span>
+            <div style="-webkit-transform:rotateX(-90deg);">
+            	<span>3</span>
+                <div style="-webkit-transform:rotateX(90deg);">
+                	<span>4</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<input type="button" value="按钮" id="btn" />
+<div id="wrap1">
+	<h2>我是标题奥</h2>
+    <div>
+    	<span>选项1</span>
+        <div>
+        	<span>选项2</span>
+            <div>
+            	<span>选项3</span>
+                <div>
+                	<span>选项4</span>
+                    <div>
+                    	<span>选项5</span>
+                        <div>
+                        	<span>选项6</span>
+                            <div style="">
+                            	<span>选项7</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+var oBtn=document.getElementById("btn");
+var oWrap=document.getElementById("wrap1");
+var aDiv=oWrap.getElementsByTagName("div");
+oBtn.onclick=function()
+{
+	for(var i=0;i<aDiv.length;i++)
+	{
+		aDiv[i].className="show";
+	}
+};
+</script>
+
+</body>
+</html>

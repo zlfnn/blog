@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+    body {
+        background: black;
+    }
+
+    #c1 {
+        background: white;
+    }
+    </style>
+</head>
+
+<body>
+    <canvas id="c1" width="500" height="500"></canvas>
+    <script>
+    window.onload = function() {
+        var oC = document.getElementById('c1');
+        var oGC = oC.getContext('2d');
+        oC.width = document.documentElement.clientWidth;
+
+        var setArr = []; //收集所有元素的集合(绘制的图形)
+
+        // window.requestAnimFrame = (function() {
+        //     return window.requestAnimationFrame ||
+        //         window.webkitRequestAnimationFrame ||
+        //         window.mozRequestAnimationFrame ||
+        //         window.oRequestAnimationFrame ||
+        //         window.msRequestAnimationFrame ||
+        //         function( /* function FrameRequestCallback */ callback, /* DOMElement Element */ element) {
+        //             window.setTimeout(callback, 1000 / 60);
+        //         };
+        // })();
+
+        // function show() {
+
+        //     requestAnimFrame(show);
+
+        //     oGC.clearRect(0, 0, oC.width, oC.height);
+
+        //     for (var i = 0; i < setArr.length; i++) {
+
+        //         setArr[i].sY += 0.02;
+
+        //         setArr[i].x += setArr[i].sX;
+        //         setArr[i].y += setArr[i].sY;
+
+        //         if (setArr[i].y >= oC.height - setArr[i].r) {
+        //             setArr[i].y = oC.height - setArr[i].r;
+        //             setArr[i].sY *= -1;
+        //             setArr[i].sY *= 0.9;
+        //             setArr[i].sX *= 0.9;
+        //         }
+        //         if (Math.abs(setArr[i].sX) <= 0.01) {
+        //             setArr.splice(i, 1);
+        //         }
+
+        //     }
+
+        //     for (var i = 0; i < setArr.length; i++) {
+        //         oGC.beginPath();
+        //         oGC.fillStyle = 'rgba(' + setArr[i].c1 + ',' + setArr[i].c2 + ',' + setArr[i].c3 + ',' + setArr[i].c4 + ')';
+        //         oGC.moveTo(setArr[i].x, setArr[i].y);
+        //         oGC.arc(setArr[i].x, setArr[i].y, setArr[i].r, 0, 360 * Math.PI / 180, false);
+        //         oGC.closePath();
+        //         oGC.fill();
+        //     }
+        // }
+        // show();
+
+        setInterval(function() {
+
+            oGC.clearRect(0, 0, oC.width, oC.height);
+
+            for (var i = 0; i < setArr.length; i++) {
+
+                setArr[i].sY += 0.02;
+
+                setArr[i].x += setArr[i].sX;
+                setArr[i].y += setArr[i].sY;
+
+                if (setArr[i].y >= oC.height - setArr[i].r) {
+                    setArr[i].y = oC.height - setArr[i].r;
+                    setArr[i].sY *= -1;
+                    setArr[i].sY *= 0.9;
+                    setArr[i].sX *= 0.9;
+                }
+                if (Math.abs(setArr[i].sX) <= 0.01) {
+                    setArr.splice(i, 1);
+                }
+
+            }
+
+            for (var i = 0; i < setArr.length; i++) {
+                oGC.beginPath();
+                oGC.fillStyle = 'rgba(' + setArr[i].c1 + ',' + setArr[i].c2 + ',' + setArr[i].c3 + ',' + setArr[i].c4 + ')';
+                oGC.moveTo(setArr[i].x, setArr[i].y);
+                oGC.arc(setArr[i].x, setArr[i].y, setArr[i].r, 0, 360 * Math.PI / 180, false);
+                oGC.closePath();
+                oGC.fill();
+            }
+
+        }, 1000 / 60);
+
+        setInterval(function() {
+
+            var x = oC.width / 2;
+            var y = oC.height / 2;
+            var r = 10;
+            var c1 = Math.floor(Math.random() * 255);
+            var c2 = Math.floor(Math.random() * 255);
+            var c3 = Math.floor(Math.random() * 255);
+            var c4 = 1;
+            var sX = Math.random() * 6 - 3; //[-3,3]
+            var sY = -(Math.random() * 3 + 1); //[1,4]
+
+            setArr.push({
+                x: x, //圆心
+                y: y,
+                r: r, //半径
+                c1: c1, //rgba
+                c2: c2,
+                c3: c3,
+                c4: c4,
+                sX: sX,  //x,y圆心的变量
+                sY: sY
+            });
+
+        }, 200);
+    }
+    </script>
+</body>
+
+</html>
