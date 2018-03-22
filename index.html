@@ -181,7 +181,11 @@
 
 <script src="/js/script.js"></script>
 
-
+    <script>
+    window.navigator.geolocation.getCurrentPosition(function(pos){
+			console.log(pos);
+		})
+    </script>  
 
   </div>
 </body>
